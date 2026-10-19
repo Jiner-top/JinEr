@@ -1,0 +1,184 @@
+.page {
+  padding: 32rpx 0 60rpx;
+}
+
+/* ---------------- 用户信息 ---------------- */
+.profile {
+  position: relative;
+  margin: 0 32rpx 28rpx;
+  min-height: 280rpx;
+  border-radius: 28rpx;
+  overflow: hidden;
+  /* 图片加载前的兜底底色 */
+  background: #14594A;
+  box-shadow: 0 16rpx 40rpx rgba(29, 122, 99, 0.22);
+}
+
+.profile__bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 压暗背景，保证头像和文字清晰 */
+.profile__mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 32, 26, 0.12) 0%,
+    rgba(8, 32, 26, 0.62) 100%
+  );
+}
+
+.profile__body {
+  position: relative;
+  z-index: 2;
+  min-height: 280rpx;
+  padding: 0 36rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.profile__avatar {
+  width: 104rpx;
+  height: 104rpx;
+  line-height: 104rpx;
+  text-align: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 44rpx;
+  font-weight: 600;
+  margin-right: 28rpx;
+}
+
+.profile__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile__name {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.45);
+}
+
+.profile__meta {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+}
+
+/* 右上角"已登录"标记 */
+.profile__badge {
+  flex: 0 0 auto;
+  padding: 4rpx 16rpx;
+  font-size: 20rpx;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999rpx;
+}
+
+/* 未登录状态：头像用虚化样式，右侧给「登录」按钮 */
+.profile__avatar--guest {
+  background: rgba(255, 255, 255, 0.2);
+  font-weight: 400;
+}
+
+.profile__login {
+  flex: 0 0 auto;
+  padding: 10rpx 28rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1D7A63;
+  background: #fff;
+  border-radius: 999rpx;
+}
+
+/* ---------------- 统计 ---------------- */
+.stats {
+  display: flex;
+  align-items: center;
+  margin: 0 32rpx 28rpx;
+  padding: 32rpx 0;
+  background: #fff;
+  border-radius: 28rpx;
+  box-shadow: 0 8rpx 32rpx rgba(31, 42, 48, 0.06);
+}
+
+.stats__item {
+  flex: 1;
+  text-align: center;
+}
+
+.stats__num {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #1D7A63;
+  line-height: 1.2;
+}
+
+.stats__label {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #A9B4BA;
+}
+
+.stats__line {
+  width: 2rpx;
+  height: 48rpx;
+  background: #F1F4F5;
+}
+
+/* ---------------- 列表 ---------------- */
+.list {
+  padding: 0 32rpx;
+}
+
+.list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 104rpx;
+  border-bottom: 2rpx solid #F5F7F8;
+}
+
+.list__item:last-child {
+  border-bottom: none;
+}
+
+.list__name {
+  font-size: 28rpx;
+  color: #1F2A30;
+}
+
+.list__name--danger {
+  color: #E5484D;
+}
+
+.list__name--primary {
+  color: #1D7A63;
+  font-weight: 600;
+}
+
+.list__arrow {
+  font-size: 34rpx;
+  color: #C8D0D4;
+}
+
+.version {
+  margin-top: 48rpx;
+  text-align: center;
+  font-size: 22rpx;
+  color: #C0C8CC;
+}

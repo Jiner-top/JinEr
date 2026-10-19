@@ -1,0 +1,71 @@
+<view class="page">
+  <!-- 状态筛选 -->
+  <view class="tabs">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="key"
+      class="tabs__item {{item.key === activeTab ? 'tabs__item--on' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="onTab"
+    >
+      <text>{{item.name}}</text>
+      <text class="tabs__badge" wx:if="{{item.count > 0}}">{{item.count}}</text>
+    </view>
+  </view>
+
+  <!-- 空状态（未登录时点击去登录） -->
+  <view wx:if="{{list.length === 0}}" bindtap="onEmptyTap">
+    <empty-state text="{{emptyText}}" sub="{{emptySub}}" />
+  </view>
+
+  <!-- 列表 -->
+  <view
+    wx:for="{{list}}"
+    wx:key="id"
+    class="card booking"
+  >
+    <!-- 可点击区域只包含信息部分，操作按钮独立在外，避免事件冒泡误触发 -->
+    <view class="booking__main" data-id="{{item.id}}" bindtap="onOpen">
+      <view class="booking__top">
+        <view>
+          <view class="booking__seat">{{item.seatNo}}</view>
+          <view class="booking__area">{{item.floorName}}</view>
+        </view>
+        <view class="tag tag--{{item.status}}">{{item.statusText}}</view>
+      </view>
+
+      <view class="booking__row">
+        <text class="booking__k">日期</text>
+        <text class="booking__v">{{item.date}}</text>
+      </view>
+      <view class="booking__row">
+        <text class="booking__k">时段</text>
+        <text class="booking__v">{{item.slotText}}</text>
+      </view>
+      <view class="booking__row">
+        <text class="booking__k">时长</text>
+        <text class="booking__v">{{item.hours}} 小时</text>
+      </view>
+    </view>
+
+    <!-- 进行中和已完成都可以取消；已取消的不再显示操作按钮 -->
+    <view class="booking__actions" wx:if="{{item.canCancel}}">
+      <button
+        class="btn-ghost"
+        catchtap="onCancel"
+        data-id="{{item.id}}"
+        data-status="{{item.status}}"
+      >取消预约</button>
+      <button
+        wx:if="{{item.canShowCode}}"
+        class="btn-primary booking__btn"
+        catchtap="onOpen"
+        data-id="{{item.id}}"
+      >查看签到码</button>
+    </view>
+  </view>
+
+  <view class="page__foot" wx:if="{{list.length > 0}}">
+    <button class="btn-ghost" bindtap="goBooking">再约一个座位</button>
+  </view>
+</view>

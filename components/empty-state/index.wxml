@@ -1,0 +1,8 @@
+<view class="empty">
+  <view class="empty__icon">
+    <view class="empty__desk"></view>
+    <view class="empty__chair"></view>
+  </view>
+  <view class="empty__text">{{text}}</view>
+  <view class="empty__sub" wx:if="{{sub}}">{{sub}}</view>
+</view>

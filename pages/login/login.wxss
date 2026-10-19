@@ -1,0 +1,225 @@
+.page {
+  min-height: 100vh;
+  padding-bottom: 60rpx;
+  background: #F5F7F8;
+}
+
+/* ---------------- 品牌区 ---------------- */
+.hero {
+  position: relative;
+  min-height: 470rpx;
+  overflow: hidden;
+  border-radius: 0 0 48rpx 48rpx;
+  /* 图片加载前的兜底底色 */
+  background: #14594A;
+}
+
+.hero__bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 上浅下深：上方保留插画细节，下方压暗让白字清晰 */
+.hero__mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 32, 26, 0.1) 0%,
+    rgba(8, 32, 26, 0.25) 50%,
+    rgba(8, 32, 26, 0.78) 100%
+  );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  min-height: 470rpx;
+  padding: 0 48rpx 120rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+}
+
+/* 纯 CSS 画的书本 + 书桌 */
+.logo {
+  position: relative;
+  width: 148rpx;
+  height: 148rpx;
+  margin: 0 auto 36rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.logo__book {
+  position: absolute;
+  top: 46rpx;
+  left: 38rpx;
+  width: 72rpx;
+  height: 52rpx;
+  border-radius: 8rpx;
+  background: #fff;
+  opacity: 0.95;
+}
+
+.logo__book::after {
+  content: '';
+  position: absolute;
+  top: 6rpx;
+  left: 34rpx;
+  width: 3rpx;
+  height: 40rpx;
+  background: rgba(29, 122, 99, 0.35);
+}
+
+.logo__desk {
+  position: absolute;
+  bottom: 42rpx;
+  left: 32rpx;
+  width: 84rpx;
+  height: 6rpx;
+  border-radius: 3rpx;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* 学校名：小字 + 大字间距，压在系统名上方 */
+.hero__school {
+  margin-bottom: 12rpx;
+  font-size: 26rpx;
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
+  color: rgba(255, 255, 255, 0.86);
+  text-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+}
+
+.hero__title {
+  font-size: 46rpx;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 3rpx;
+  text-shadow: 0 2rpx 14rpx rgba(0, 0, 0, 0.45);
+}
+
+.hero__sub {
+  margin-top: 14rpx;
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.88);
+  letter-spacing: 1rpx;
+  text-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+}
+
+/* ---------------- 表单 ---------------- */
+.form {
+  margin: -60rpx 40rpx 0;
+  padding: 16rpx 36rpx;
+  background: #fff;
+  border-radius: 28rpx;
+  box-shadow: 0 12rpx 40rpx rgba(31, 42, 48, 0.1);
+  position: relative;
+  z-index: 2;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  height: 112rpx;
+  border-bottom: 2rpx solid #F3F6F7;
+}
+
+.field:last-child {
+  border-bottom: none;
+}
+
+.field__label {
+  width: 110rpx;
+  font-size: 28rpx;
+  color: #4A555C;
+  font-weight: 500;
+}
+
+.field__input {
+  flex: 1;
+  height: 112rpx;
+  font-size: 30rpx;
+  color: #1F2A30;
+}
+
+.field__ph {
+  color: #C0C8CC;
+  font-size: 28rpx;
+}
+
+/* ---------------- 协议 ---------------- */
+.agree {
+  display: flex;
+  align-items: flex-start;
+  margin: 36rpx 48rpx 0;
+}
+
+.agree__box {
+  flex: 0 0 auto;
+  width: 34rpx;
+  height: 34rpx;
+  margin-top: 4rpx;
+  margin-right: 14rpx;
+  border-radius: 50%;
+  border: 2rpx solid #D5DDE0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.16s ease;
+}
+
+.agree__box--on {
+  background: #1D7A63;
+  border-color: #1D7A63;
+}
+
+.agree__tick {
+  font-size: 22rpx;
+  color: #fff;
+  line-height: 1;
+}
+
+.agree__text {
+  flex: 1;
+  font-size: 24rpx;
+  color: #7A878F;
+  line-height: 1.6;
+}
+
+/* ---------------- 按钮 ---------------- */
+.login-btn {
+  margin: 56rpx 48rpx 0;
+  height: 96rpx;
+  line-height: 96rpx;
+  border-radius: 48rpx;
+  font-size: 32rpx;
+  letter-spacing: 2rpx;
+}
+
+.skip {
+  margin-top: 32rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: #7A878F;
+}
+
+.tips {
+  margin-top: 72rpx;
+  text-align: center;
+  font-size: 22rpx;
+  color: #B8C1C6;
+}

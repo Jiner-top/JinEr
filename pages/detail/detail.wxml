@@ -1,0 +1,41 @@
+<view class="page" wx:if="{{booking}}">
+  <!-- 签到码 -->
+  <view class="code-card">
+    <view class="code-card__label">签到码</view>
+    <view class="code-card__num" bindtap="onCopyCode">{{booking.code}}</view>
+    <view class="code-card__tip" wx:if="{{booking.status === 'active'}}">点击数字可复制，到自习室终端输入即可签到</view>
+    <view class="code-card__tip" wx:else>该预约已{{statusText}}，签到码不再有效</view>
+  </view>
+
+  <!-- 预约信息 -->
+  <view class="card">
+    <view class="row">
+      <text class="row__k">座位</text>
+      <text class="row__v row__v--strong">{{booking.seatNo}}</text>
+    </view>
+    <view class="row">
+      <text class="row__k">楼层</text>
+      <text class="row__v">{{booking.areaText}}</text>
+    </view>
+    <view class="row">
+      <text class="row__k">日期</text>
+      <text class="row__v">{{booking.date}}</text>
+    </view>
+    <view class="row">
+      <text class="row__k">时段</text>
+      <text class="row__v">{{booking.slotText}}</text>
+    </view>
+    <view class="row">
+      <text class="row__k">时长</text>
+      <text class="row__v">{{hours}} 小时</text>
+    </view>
+    <view class="row">
+      <text class="row__k">状态</text>
+      <text class="tag tag--{{booking.status}}">{{statusText}}</text>
+    </view>
+  </view>
+
+  <view class="action" wx:if="{{booking.status === 'active'}}">
+    <button class="btn-ghost action__btn" bindtap="onCancel">取消预约</button>
+  </view>
+</view>

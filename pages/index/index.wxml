@@ -1,0 +1,95 @@
+<view class="page">
+  <!-- 顶部信息：背景图 + 渐变蒙层，保证文字可读 -->
+  <view class="hero">
+    <image class="hero__bg" src="/images/hero.jpg" mode="aspectFill"></image>
+    <view class="hero__mask"></view>
+    <view class="hero__content">
+      <view class="hero__sub">{{activeDateLabel}} · 当前楼层剩余 {{freeCount}} 个空位</view>
+    </view>
+  </view>
+
+  <!-- 日期选择 -->
+  <view class="date-wrap">
+    <date-bar days="{{days}}" active="{{activeDate}}" bind:change="onDateChange" />
+  </view>
+
+  <!-- 楼层切换：2~8 层可预约 -->
+  <view class="floors">
+    <view
+      wx:for="{{floors}}"
+      wx:key="floor"
+      class="floor {{item.floor === activeFloor ? 'floor--on' : ''}}"
+      data-floor="{{item.floor}}"
+      bindtap="onFloorChange"
+    >
+      <view class="floor__num">{{item.short}}</view>
+      <view class="floor__free">{{item.freeText}}</view>
+    </view>
+  </view>
+
+  <!-- 座位图 -->
+  <view class="card">
+    <view class="card__head">
+      <text class="card__title">{{activeFloorName}}</text>
+      <text class="card__sub">点击空位选择时段</text>
+    </view>
+
+    <seat-map seats="{{seats}}" bind:select="onSeatSelect" />
+
+    <view class="legend">
+      <view class="legend__item"><view class="dot dot--free"></view><text>空闲</text></view>
+      <view class="legend__item"><view class="dot dot--used"></view><text>已预约</text></view>
+      <view class="legend__item"><view class="dot dot--mine"></view><text>我的</text></view>
+      <view class="legend__item"><view class="dot dot--fix"></view><text>维修</text></view>
+    </view>
+  </view>
+
+  <!-- 使用须知 -->
+  <view class="tips">
+    <view class="tips__title">使用须知</view>
+    <view class="tips__item">· 单次预约最多选择 {{maxSlots}} 个连续时段</view>
+    <view class="tips__item">· 今天已经结束的时段不可再预约</view>
+    <view class="tips__item">· 同一时段只能预约一个座位，不可跨楼层重复预约</view>
+    <view class="tips__item">· 请在预约开始后 30 分钟内到场签到，超时座位自动释放</view>
+    <view class="tips__item">· 累计 3 次违约将暂停预约权限 7 天</view>
+  </view>
+</view>
+
+<!-- 时段选择弹层 -->
+<view class="mask" wx:if="{{showPanel}}" bindtap="closePanel" catchtouchmove="noop"></view>
+
+<view class="panel {{showPanel ? 'panel--on' : ''}}">
+  <view class="panel__head">
+    <view>
+      <view class="panel__title">选择时段</view>
+      <view class="panel__sub">{{selectedSeat.no}} · {{activeDateLabel}}</view>
+    </view>
+    <view class="panel__close" bindtap="closePanel">✕</view>
+  </view>
+
+  <view class="slots">
+    <view
+      wx:for="{{slots}}"
+      wx:key="id"
+      class="slot {{item.disabled ? 'slot--off' : ''}} {{item.checked ? 'slot--on' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="toggleSlot"
+    >
+      <text class="slot__time">{{item.label}}</text>
+      <text class="slot__tip">{{item.checked ? '已选' : item.tip}}</text>
+    </view>
+  </view>
+
+  <view class="panel__tip" wx:if="{{conflictTip}}">{{conflictTip}}</view>
+
+  <view class="panel__foot">
+    <view class="panel__count">
+      已选 <text class="panel__num">{{selectedSlots.length}}</text> / {{maxSlots}} 个时段
+    </view>
+    <button
+      class="btn-primary panel__btn"
+      disabled="{{selectedSlots.length === 0}}"
+      bindtap="confirmBooking"
+    >确认预约</button>
+  </view>
+</view>

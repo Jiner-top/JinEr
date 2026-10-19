@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>图书馆预约系统 · 界面预览</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    padding: 40px 24px;
+    background: #EEF1F3;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #1F2A30;
+  }
+
+  .stage { text-align: center; }
+  .stage h2 { font-size: 13px; font-weight: 600; color: #7A878F; letter-spacing: 1px; margin: 0 0 14px; }
+
+  /* ---------- 手机外壳 ---------- */
+  .phone {
+    width: 375px;
+    height: 760px;
+    background: #F5F7F8;
+    border-radius: 44px;
+    box-shadow: 0 24px 60px rgba(24, 40, 48, 0.18), 0 0 0 10px #1b2429, 0 0 0 12px #2b3539;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .nav {
+    height: 44px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 600;
+    background: #fff;
+    border-bottom: 1px solid #F0F3F4;
+    position: relative;
+    z-index: 5;
+  }
+  .nav .back { position: absolute; left: 14px; font-size: 20px; color: #1F2A30; cursor: pointer; display: none; }
+  .viewport { flex: 1; overflow-y: auto; overflow-x: hidden; position: relative; }
+  .viewport::-webkit-scrollbar { width: 0; }
+
+  .screen { display: none; }
+  .screen.on { display: block; }
+
+  /* ---------- tabbar ---------- */
+  .tabbar {
+    flex: 0 0 auto;
+    height: 56px;
+    display: flex;
+    background: #fff;
+    border-top: 1px solid #F0F3F4;
+    padding-bottom: 4px;
+  }
+  .tabbar div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    font-size: 10px;
+    color: #9AA3AF;
+    cursor: pointer;
+  }
+  .tabbar div.on { color: #1D7A63; font-weight: 600; }
+  .tabbar svg { width: 21px; height: 21px; }
+
+  /* ---------- 首页 ---------- */
+  .hero {
+    position: relative;
+    min-height: 168px;
+    overflow: hidden;
+    border-radius: 0 0 20px 20px;
+    background: #14594A url('images/hero.jpg') center / cover no-repeat;
+  }
+  .hero-mask {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(8,32,26,.08) 0%, rgba(8,32,26,.28) 55%, rgba(8,32,26,.72) 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    min-height: 168px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 20px 22px;
+  }
+  .hero p {
+    margin: 0; font-size: 13px; color: rgba(255,255,255,.92);
+    text-shadow: 0 1px 5px rgba(0,0,0,.4);
+  }
+
+  .datebar { display: flex; gap: 8px; padding: 8px 16px 0; margin-top: -20px; position: relative; z-index: 2; overflow-x: auto; }
+  .datebar::-webkit-scrollbar { height: 0; }
+  .day {
+    flex: 0 0 auto; width: 52px; padding: 8px 0; border-radius: 10px; text-align: center;
+    background: #fff; border: 1px solid transparent; transition: .18s;
+  }
+  .day span { display: block; font-size: 11px; color: #7A878F; }
+  .day b { display: block; font-size: 17px; line-height: 1.25; }
+  .day.on { background: #1D7A63; border-color: #1D7A63; box-shadow: 0 4px 10px rgba(29,122,99,.25); }
+  .day.on span, .day.on b { color: #fff; }
+
+  .floors { display: flex; flex-wrap: wrap; margin: 10px 13px 2px; }
+  .floor {
+    width: calc(25% - 6px); margin: 3px; padding: 8px 0 7px; border-radius: 9px;
+    text-align: center; background: #fff; border: 1px solid transparent;
+    box-shadow: 0 2px 7px rgba(31,42,48,.05); cursor: pointer; transition: .18s;
+  }
+  .floor__num { font-size: 16px; font-weight: 700; color: #1F2A30; line-height: 1.2; }
+  .floor__free { margin-top: 2px; font-size: 10px; color: #A9B4BA; }
+  .floor.on {
+    background: linear-gradient(135deg,#23876E,#14594A);
+    border-color: #14594A; box-shadow: 0 4px 10px rgba(29,122,99,.28);
+  }
+  .floor.on .floor__num { color: #fff; }
+  .floor.on .floor__free { color: rgba(255,255,255,.82); }
+
+  .card {
+    background: #fff; border-radius: 14px; padding: 16px; margin: 0 16px 14px;
+    box-shadow: 0 4px 16px rgba(31,42,48,.06);
+  }
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+  .card-head b { font-size: 15px; }
+  .card-head span { font-size: 11.5px; color: #A9B4BA; }
+
+  .grid { display: flex; flex-wrap: wrap; margin: 0 -2.5px; }
+  .seat {
+    width: calc(12.5% - 5px); height: 40px; margin: 2.5px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; border: 1px solid transparent;
+    transition: transform .12s, background .15s; cursor: pointer; user-select: none;
+  }
+  .seat:active { transform: scale(.92); }
+  .seat.free { background: #fff; border-color: #D8E7E2; color: #1D7A63; box-shadow: 0 1px 3px rgba(29,122,99,.06); }
+  .seat.used { background: #F1F3F4; border-color: #F1F3F4; color: #BCC5CA; }
+  .seat.mine { background: linear-gradient(135deg,#23876E,#14594A); border-color: #14594A; color: #fff; }
+  .seat.fix  { background: #FDF2F0; border: 1px dashed #F0C6BF; color: #D9A29A; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #F2F5F6; }
+  .legend i { display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: #7A878F; font-style: normal; }
+  .legend em { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+  .dot-free { background: #fff; border: 1px solid #D8E7E2; }
+  .dot-used { background: #F1F3F4; }
+  .dot-mine { background: #1D7A63; }
+  .dot-fix  { background: #FDF2F0; border: 1px dashed #F0C6BF; }
+
+  .tips { margin: 0 20px 20px; padding: 14px 16px; background: rgba(29,122,99,.05); border-radius: 10px; }
+  .tips b { display: block; font-size: 12.5px; color: #1D7A63; margin-bottom: 6px; }
+  .tips p { margin: 0; font-size: 11.5px; color: #7A878F; line-height: 1.9; }
+
+  /* ---------- 弹层 ---------- */
+  .mask {
+    position: absolute; inset: 0; background: rgba(16,24,28,.45);
+    opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 20;
+  }
+  .mask.on { opacity: 1; pointer-events: auto; }
+  .panel {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 21;
+    background: #fff; border-radius: 16px 16px 0 0; padding: 18px 16px 20px;
+    transform: translateY(110%); transition: transform .28s cubic-bezier(.2,.8,.3,1);
+  }
+  .panel.on { transform: translateY(0); }
+  .panel-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .panel-head b { font-size: 16px; }
+  .panel-head p { margin: 4px 0 0; font-size: 11.5px; color: #A9B4BA; }
+  .panel-close { width: 26px; height: 26px; line-height: 26px; text-align: center; border-radius: 50%;
+    background: #F4F6F7; color: #A9B4BA; font-size: 13px; cursor: pointer; }
+  .slots { display: flex; flex-wrap: wrap; margin: 0 -4px 10px; }
+  .slot {
+    width: calc(50% - 8px); margin: 4px; padding: 11px 10px; border-radius: 9px;
+    border: 1px solid #EDF1F3; background: #FAFBFB; cursor: pointer; transition: .16s;
+  }
+  .slot b { display: block; font-size: 13px; }
+  .slot span { display: block; font-size: 10.5px; color: #A9B4BA; margin-top: 2px; }
+  .slot.on { background: #E7F4F0; border-color: #1D7A63; }
+  .slot.on b, .slot.on span { color: #1D7A63; }
+  .slot.off { background: #F7F8F9; border-color: #F1F3F4; }
+  .slot.off b, .slot.off span { color: #C4CCD1; }
+
+  .panel-tip {
+    display: none; margin: 0 4px 10px; padding: 8px 10px; border-radius: 8px;
+    background: #FDF4E3; color: #B07B12; font-size: 11px; line-height: 1.5;
+  }
+  .panel-tip.on { display: block; }
+  .panel-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }  .panel-foot p { margin: 0; font-size: 11.5px; color: #7A878F; }
+  .panel-foot p b { font-size: 16px; color: #1D7A63; }
+  .btn {
+    height: 44px; padding: 0 30px; border: none; border-radius: 22px; cursor: pointer;
+    font-size: 14px; font-weight: 600; color: #fff;
+    background: linear-gradient(135deg,#23876E,#14594A);
+    box-shadow: 0 5px 12px rgba(29,122,99,.28);
+  }
+  .btn:disabled { background: #D5DDE0; box-shadow: none; cursor: not-allowed; }
+  .btn-ghost {
+    height: 36px; padding: 0 16px; border-radius: 18px; border: 1px solid #EDF1F3;
+    background: #fff; color: #7A878F; font-size: 12.5px; cursor: pointer;
+  }
+
+  /* ---------- 我的预约 ---------- */
+  .tabs { display: flex; margin: 12px 16px 14px; padding: 4px; background: #EBEFF1; border-radius: 10px; }
+  .tabs div { flex: 1; height: 32px; line-height: 32px; text-align: center; font-size: 12.5px; color: #7A878F; border-radius: 7px; cursor: pointer; }
+  .tabs div.on { background: #fff; color: #1D7A63; font-weight: 600; box-shadow: 0 2px 7px rgba(31,42,48,.08); }
+
+  /* 未登录时的空状态卡片 */
+  .empty-card { text-align: center; padding: 46px 0; cursor: pointer; }
+  .empty-title { font-size: 13px; color: #7A878F; font-weight: 500; }
+  .empty-sub { margin-top: 6px; font-size: 11.5px; color: #A9B4BA; }
+
+  .booking-top { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 12px; border-bottom: 1px solid #F2F5F6; margin-bottom: 4px; }  .booking-top b { font-size: 17px; letter-spacing: .5px; }
+  .booking-top p { margin: 3px 0 0; font-size: 11.5px; color: #A9B4BA; }
+  .tag { font-size: 10.5px; padding: 3px 9px; border-radius: 99px; }
+  .tag.active { color: #1D7A63; background: #E7F4F0; }
+  .tag.done { color: #7A878F; background: #F1F4F5; }
+  .row { display: flex; padding: 6px 0; font-size: 12.5px; }
+  .row span { width: 46px; color: #A9B4BA; }
+  .row em { flex: 1; font-style: normal; color: #4A555C; }
+  .booking-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #F2F5F6; }
+  .btn-sm { height: 34px; padding: 0 18px; border-radius: 17px; font-size: 12.5px; box-shadow: none; }
+
+  /* ---------- 详情 ---------- */
+  .code-card {
+    margin: 16px; padding: 26px 16px 20px; border-radius: 14px; text-align: center;
+    background: linear-gradient(150deg,#23876E,#14594A); box-shadow: 0 8px 20px rgba(29,122,99,.24);
+  }
+  .code-card small { font-size: 11px; letter-spacing: 3px; color: rgba(255,255,255,.7); }
+  .code-card b { display: block; font-size: 38px; letter-spacing: 7px; color: #fff; margin: 10px 0 8px; text-indent: 7px; }
+  .code-card p { margin: 0; font-size: 10.5px; color: rgba(255,255,255,.68); }
+
+  /* ---------- 我的 ---------- */
+  .profile {
+    position: relative; display: flex; align-items: center; margin: 16px; padding: 20px 18px;
+    min-height: 104px; border-radius: 14px; overflow: hidden;
+    background: #14594A url('images/hero.jpg') center / cover no-repeat;
+    box-shadow: 0 8px 20px rgba(29,122,99,.22);
+  }
+  .profile::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(8,32,26,.12) 0%, rgba(8,32,26,.62) 100%);
+  }
+  .profile > * { position: relative; z-index: 2; }
+  .avatar { width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.22);
+    color: #fff; font-size: 22px; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-right: 14px; }
+  .profile b { display: block; font-size: 17px; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.45); }
+  .profile p { margin: 4px 0 0; font-size: 11.5px; color: rgba(255,255,255,.88); text-shadow: 0 1px 5px rgba(0,0,0,.4); }
+
+  /* 未登录状态：头像弱化，右侧给「登录」按钮 */
+  .profile.guest .avatar { background: rgba(255,255,255,.2); font-weight: 400; }
+  .pf-login {
+    padding: 6px 16px; border-radius: 99px; background: #fff; color: #1D7A63;
+    font-size: 12.5px; font-weight: 600; cursor: pointer;
+  }
+
+  .stats { display: flex; align-items: center; margin: 0 16px 14px; padding: 16px 0; background: #fff; border-radius: 14px; box-shadow: 0 4px 16px rgba(31,42,48,.06); }
+  .stats > div { flex: 1; text-align: center; }
+  .stats b { display: block; font-size: 20px; color: #1D7A63; }
+  .stats span { font-size: 10.5px; color: #A9B4BA; }
+  .stats i { width: 1px; height: 24px; background: #F1F4F5; }
+
+  .list { padding: 0 16px; }
+  .list div { display: flex; justify-content: space-between; align-items: center; height: 50px;
+    font-size: 13px; border-bottom: 1px solid #F5F7F8; }
+  .list div:last-child { border-bottom: none; }
+  .list div em { font-style: normal; color: #C8D0D4; font-size: 16px; }
+  .list div.danger { color: #E5484D; }
+
+  .footnote { text-align: center; font-size: 10.5px; color: #C0C8CC; margin: 24px 0 16px; }
+
+  /* ---------- 登录页 ---------- */
+  .lg-hero {
+    position: relative; min-height: 235px; overflow: hidden;
+    border-radius: 0 0 22px 22px;
+    background: #14594A url('images/hero.jpg') center / cover no-repeat;
+  }
+  .lg-hero-mask {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(8,32,26,.10) 0%, rgba(8,32,26,.25) 50%, rgba(8,32,26,.78) 100%);
+  }
+  .lg-hero-content {
+    position: relative; z-index: 2; min-height: 235px;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding: 0 24px 60px; text-align: center;
+  }
+  .lg-logo {
+    position: relative; width: 70px; height: 70px; margin: 0 auto 16px;
+    border-radius: 50%; background: rgba(255,255,255,.2);
+    border: 1px solid rgba(255,255,255,.3);
+  }
+  .lg-book {
+    position: absolute; top: 22px; left: 18px; width: 34px; height: 24px;
+    border-radius: 4px; background: #fff;
+  }
+  .lg-desk {
+    position: absolute; bottom: 20px; left: 15px; width: 40px; height: 3px;
+    border-radius: 2px; background: rgba(255,255,255,.6);
+  }
+  .lg-school {
+    margin-bottom: 6px; font-size: 12.5px; letter-spacing: 4px; text-indent: 4px;
+    color: rgba(255,255,255,.86); text-shadow: 0 1px 5px rgba(0,0,0,.4);
+  }
+  .lg-hero h1 {
+    margin: 0; font-size: 20px; color: #fff; letter-spacing: 1.5px;
+    text-shadow: 0 1px 7px rgba(0,0,0,.45);
+  }
+  .lg-hero p {
+    margin: 7px 0 0; font-size: 12px; color: rgba(255,255,255,.88);
+    text-shadow: 0 1px 5px rgba(0,0,0,.4);
+  }
+
+  .lg-form {
+    margin: -26px 20px 0; padding: 4px 18px; background: #fff; border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(31,42,48,.1); position: relative; z-index: 2;
+  }
+  .lg-field { display: flex; align-items: center; height: 54px; border-bottom: 1px solid #F3F6F7; }
+  .lg-field:last-child { border-bottom: none; }
+  .lg-field span { width: 52px; font-size: 13px; color: #4A555C; font-weight: 500; }
+  .lg-field input {
+    flex: 1; height: 54px; border: none; outline: none; background: transparent;
+    font-size: 14px; color: #1F2A30; font-family: inherit;
+  }
+  .lg-field input::placeholder { color: #C0C8CC; }
+
+  .lg-agree { display: flex; align-items: flex-start; gap: 7px; margin: 18px 24px 0; cursor: pointer; }
+  .lg-box {
+    flex: 0 0 auto; width: 16px; height: 16px; margin-top: 2px; border-radius: 50%;
+    border: 1px solid #D5DDE0; background: #fff; position: relative; transition: .16s;
+  }
+  .lg-box.on { background: #1D7A63; border-color: #1D7A63; }
+  .lg-box.on::after {
+    content: ''; position: absolute; left: 5px; top: 2px; width: 4px; height: 8px;
+    border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg);
+  }
+  .lg-agree span { font-size: 11.5px; color: #7A878F; line-height: 1.6; }
+
+  .lg-btn {
+    display: block; width: calc(100% - 48px); margin: 26px 24px 0; height: 46px;
+    border-radius: 23px; font-size: 15px; letter-spacing: 2px;
+  }
+  .lg-skip { margin-top: 16px; text-align: center; font-size: 12.5px; color: #7A878F; cursor: pointer; }
+  .lg-tip { margin-top: 34px; text-align: center; font-size: 10.5px; color: #B8C1C6; }
+
+  /* ---------- 确认弹窗 ---------- */
+  .dialog-mask {
+    position: absolute; inset: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(16, 24, 28, .45);
+    opacity: 0; pointer-events: none; transition: opacity .2s;
+  }
+  .dialog-mask.on { opacity: 1; pointer-events: auto; }
+  .dialog {
+    width: 272px; padding: 22px 20px 16px; border-radius: 14px; background: #fff; text-align: center;
+    transform: scale(.94); transition: transform .2s;
+  }
+  .dialog-mask.on .dialog { transform: scale(1); }
+  .dialog b { font-size: 16px; }
+  .dialog p { margin: 10px 0 20px; font-size: 12.5px; color: #7A878F; line-height: 1.7; }
+  .dialog-actions { display: flex; gap: 10px; }
+  .dlg-btn { flex: 1; height: 40px; border: none; border-radius: 20px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+  .dlg-btn--cancel { background: #F2F5F6; color: #7A878F; }
+  .dlg-btn--ok { background: linear-gradient(135deg,#23876E,#14594A); color: #fff; }
+  .dlg-btn--ok.danger { background: #E5484D; }
+
+  /* ---------- 轻提示 ---------- */
+  .toast {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(.9);
+    padding: 12px 22px; border-radius: 10px; background: rgba(16, 24, 28, .82);
+    color: #fff; font-size: 13px; opacity: 0; pointer-events: none; transition: all .22s; z-index: 40;
+  }
+  .toast.on { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <h2>首页 · 选座预约</h2>
+  <div class="phone">
+    <div class="nav"><span class="back">‹</span><span id="navTitle">图书馆预约</span></div>
+
+    <div class="viewport">
+      <!-- ============ 首页 ============ -->
+      <div class="screen on" id="s-index">
+        <div class="hero">
+          <div class="hero-mask"></div>
+          <div class="hero-content">
+            <p id="heroSub">今天 · 当前剩余 -- 个空位</p>
+          </div>
+        </div>
+
+        <div class="datebar" id="datebar"></div>
+
+        <div class="floors" id="floors"></div>
+
+        <div class="card">
+          <div class="card-head"><b id="floorTitle">二楼 · 综合阅览</b><span>点击空位选择时段</span></div>
+          <div class="grid" id="grid"></div>
+          <div class="legend">
+            <i><em class="dot-free"></em>空闲</i>
+            <i><em class="dot-used"></em>已预约</i>
+            <i><em class="dot-mine"></em>我的</i>
+            <i><em class="dot-fix"></em>维修</i>
+          </div>
+        </div>
+
+        <div class="tips">
+          <b>使用须知</b>
+          <p>· 单次预约最多选择 2 个连续时段</p>
+          <p>· 同一时段只能预约一个座位，不可跨楼层重复预约</p>
+          <p>· 请在预约开始后 30 分钟内到场签到</p>
+          <p>· 累计 3 次违约将暂停预约权限 7 天</p>
+        </div>
+      </div>
+
+      <!-- ============ 我的预约 ============ -->
+      <div class="screen" id="s-my">
+        <div class="tabs" id="myTabs">
+          <div class="on" data-tab="all">全部</div>
+          <div data-tab="active">进行中</div>
+          <div data-tab="done">已完成</div>
+        </div>
+        <div id="bookingList"></div>
+        <div class="footnote">— 共 <span id="bookingCount">0</span> 条记录 · 构建 v1.0.17 —</div>
+      </div>
+
+      <!-- ============ 详情 ============ -->
+      <div class="screen" id="s-detail">
+        <div class="code-card">
+          <small>签 到 码</small>
+          <b id="dCode">------</b>
+          <p id="dTip">点击数字可复制，到自习室终端输入即可签到</p>
+        </div>
+        <div class="card">
+          <div class="row"><span>座位</span><em id="dSeat">-</em></div>
+          <div class="row"><span>楼层</span><em id="dArea">-</em></div>
+          <div class="row"><span>日期</span><em id="dDate">-</em></div>
+          <div class="row"><span>时段</span><em id="dSlot">-</em></div>
+          <div class="row"><span>状态</span><em id="dStatus">-</em></div>
+        </div>
+      </div>
+
+      <!-- ============ 登录页 ============ -->
+      <div class="screen" id="s-login">
+        <div class="lg-hero">
+          <div class="lg-hero-mask"></div>
+          <div class="lg-hero-content">
+            <div class="lg-logo"><div class="lg-book"></div><div class="lg-desk"></div></div>
+            <div class="lg-school">南阳师范学院</div>
+            <h1>图书馆预约系统</h1>
+            <p>静心学习，从一个好座位开始</p>
+          </div>
+        </div>
+
+        <div class="lg-form">
+          <div class="lg-field">
+            <span>学号</span>
+            <input id="lgId" type="number" maxlength="12" placeholder="请输入学号" />
+          </div>
+          <div class="lg-field">
+            <span>昵称</span>
+            <input id="lgName" maxlength="12" placeholder="请输入昵称" />
+          </div>
+        </div>
+
+        <div class="lg-agree" id="lgAgree">
+          <i class="lg-box" id="lgBox"></i>
+          <span>我已阅读并同意《用户协议》和《隐私政策》</span>
+        </div>
+
+        <button class="btn lg-btn" id="lgSubmit" disabled>登 录</button>
+        <div class="lg-skip" id="lgSkip">暂不登录，先逛逛</div>
+        <div class="lg-tip">登录后可预约座位、查看预约记录</div>
+      </div>
+
+      <!-- ============ 我的 ============ -->
+      <div class="screen" id="s-profile">
+        <div class="profile guest" id="pfCard">
+          <div class="avatar" id="pfAvatar">?</div>
+          <div style="flex:1">
+            <b id="pfName">未登录</b>
+            <p id="pfMeta">点击登录，同步你的预约记录</p>
+          </div>
+          <span class="pf-login" id="pfLogin">登录</span>
+        </div>
+        <div class="stats">
+          <div><b id="stTotal">0</b><span>累计预约</span></div>
+          <i></i>
+          <div><b id="stHours">0</b><span>自习时长(h)</span></div>
+          <i></i>
+          <div><b id="stActive">0</b><span>进行中</span></div>
+        </div>
+        <div class="card list">
+          <div><span>预约规则</span><em>›</em></div>
+          <div><span>意见反馈</span><em>›</em></div>
+          <div><span>关于本程序</span><em>›</em></div>
+        </div>
+        <div class="card list" id="pfActions">
+          <div class="danger" id="pfLogout" data-act="logout" style="display:none"><span>退出登录</span><em>›</em></div>
+          <div class="danger" data-act="reset"><span>重置演示数据</span><em>›</em></div>
+        </div>
+        <div class="footnote">图书馆预约系统 · v1.0.17</div>
+      </div>
+    </div>
+
+    <!-- 时段弹层 -->
+    <div class="mask" id="mask"></div>
+    <div class="panel" id="panel">
+      <div class="panel-head">
+        <div>
+          <b>选择时段</b>
+          <p id="panelSub">-</p>
+        </div>
+        <div class="panel-close" id="panelClose">✕</div>
+      </div>
+      <div class="slots" id="slots"></div>
+      <div class="panel-tip" id="panelTip"></div>
+      <div class="panel-foot">
+        <p>已选 <b id="selCount">0</b> / 2 个时段</p>
+        <button class="btn" id="confirmBtn" disabled>确认预约</button>
+      </div>
+    </div>
+
+    <!-- 确认弹窗 -->
+    <div class="dialog-mask" id="dlgMask">
+      <div class="dialog">
+        <b id="dlgTitle">取消预约</b>
+        <p id="dlgText">取消后座位将立即释放，确定要取消吗？</p>
+        <div class="dialog-actions">
+          <button class="dlg-btn dlg-btn--cancel" id="dlgCancel">再想想</button>
+          <button class="dlg-btn dlg-btn--ok" id="dlgOk">确定取消</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- tabbar -->
+    <div class="tabbar" id="tabbar">
+      <div class="on" data-tab="index">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/>
+        </svg>预约
+      </div>
+      <div data-tab="my">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M9 5h11M9 12h11M9 19h11"/><circle cx="4.5" cy="5" r="1.4"/><circle cx="4.5" cy="12" r="1.4"/><circle cx="4.5" cy="19" r="1.4"/>
+        </svg>我的预约
+      </div>
+      <div data-tab="profile">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/>
+        </svg>我的
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ================= 数据层（与小程序 utils 保持同一套逻辑） ================= */
+  /* 图书馆 8 层，1 层借还书大厅不可预约，2~8 层可预约 */
+  var FLOORS = [
+    { floor: 2, short: '2F', name: '二楼 · 综合阅览', rows: 6, brokenRate: 5 },
+    { floor: 3, short: '3F', name: '三楼 · 社科借阅', rows: 6, brokenRate: 8 },
+    { floor: 4, short: '4F', name: '四楼 · 自然科学', rows: 5, brokenRate: 6 },
+    { floor: 5, short: '5F', name: '五楼 · 文学阅览', rows: 5, brokenRate: 7 },
+    { floor: 6, short: '6F', name: '六楼 · 电子阅览', rows: 5, brokenRate: 9 },
+    { floor: 7, short: '7F', name: '七楼 · 研讨空间', rows: 4, brokenRate: 4 },
+    { floor: 8, short: '8F', name: '八楼 · 静音自习', rows: 4, brokenRate: 3 }
+  ];
+  var COLS = 8;
+  var SLOTS = [
+    { id: 1, label: '08:00-10:00', start: '08:00', end: '10:00' },
+    { id: 2, label: '10:00-12:00', start: '10:00', end: '12:00' },
+    { id: 3, label: '14:00-16:00', start: '14:00', end: '16:00' },
+    { id: 4, label: '16:00-18:00', start: '16:00', end: '18:00' },
+    { id: 5, label: '19:00-21:00', start: '19:00', end: '21:00' }
+  ];
+  var SLOT_MIN_REMAIN_MIN = 0;
+
+  /** 时段结束时间之前都可以预约（进行中也还能约） */
+  function isSlotExpired(slot, now) {
+    var d = now || new Date();
+    var p = String(slot.end).split(':');
+    var end = new Date(d.getFullYear(), d.getMonth(), d.getDate(),
+      Number(p[0]), Number(p[1]), 0, 0);
+    return d.getTime() >= end.getTime() - SLOT_MIN_REMAIN_MIN * 60 * 1000;
+  }
+  var WEEK = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function fmt(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+
+  function getDays(n) {
+    var out = [], now = new Date();
+    for (var i = 0; i < n; i++) {
+      var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+      out.push({
+        date: fmt(d),
+        day: pad(d.getDate()),
+        label: i === 0 ? '今天' : i === 1 ? '明天' : WEEK[d.getDay()]
+      });
+    }
+    return out;
+  }
+
+  function hash(s) {
+    var h = 0;
+    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+    return Math.abs(h);
+  }
+  function pseudo(seed, i) { return ((seed * 9301 + i * 49297) % 233280) / 233280; }
+
+  function getFloor(floor) {
+    return FLOORS.filter(function (f) { return f.floor === floor; })[0] || FLOORS[0];
+  }
+
+  function buildSeats(floor, date) {
+    var f = getFloor(floor);
+    var total = f.rows * COLS;
+    var seed = hash(f.floor + '-' + date);
+    var list = [];
+    for (var i = 0; i < total; i++) {
+      var r = pseudo(seed, i) * 100;
+      var st = 'free';
+      if (r < f.brokenRate) st = 'fix';
+      else if (r < f.brokenRate + 38) st = 'used';
+      var num = i + 1;
+      list.push({
+        id: f.floor + 'F-' + num,
+        short: num < 10 ? '0' + num : '' + num,
+        no: f.short + ' ' + num + '号',
+        floor: f.floor,
+        floorName: f.name,
+        status: st
+      });
+    }
+    return list;
+  }
+
+  var days = getDays(7);
+  var state = {
+    date: days[0].date,
+    dateLabel: days[0].label,
+    floor: 2,
+    tab: 'all',
+    screen: 'index',
+    loginReturn: 'index',
+    pendingSeat: null,
+    agreed: false,
+    user: null,
+    seat: null,
+    picked: [],
+    bookings: []
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ================= 渲染首页 ================= */
+  function renderDates() {
+    $('datebar').innerHTML = days.map(function (d) {
+      return '<div class="day ' + (d.date === state.date ? 'on' : '') + '" data-date="' + d.date + '">' +
+        '<span>' + d.label + '</span><b>' + d.day + '</b></div>';
+    }).join('');
+  }
+
+  function renderFloors() {
+    var mine = mineMap();
+    $('floors').innerHTML = FLOORS.map(function (f) {
+      var list = buildSeats(f.floor, state.date);
+      var free = 0;
+      list.forEach(function (s) {
+        if (!mine[s.no] && s.status === 'free') free++;
+      });
+      var on = f.floor === state.floor ? 'on' : '';
+      return '<div class="floor ' + on + '" data-floor="' + f.floor + '">' +
+        '<div class="floor__num">' + f.short + '</div>' +
+        '<div class="floor__free">' + (free > 0 ? '剩 ' + free + ' 座' : '已满') + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function mineMap() {
+    var m = {};
+    // 未登录时不存在「我的座位」
+    if (!state.user) return m;
+    state.bookings.forEach(function (b) {
+      // 必须按日期过滤，否则换一天还会显示成"我的"
+      if (b.status === 'active' && b.date === state.date) m[b.seatNo] = true;
+    });
+    return m;
+  }
+
+  function renderSeats() {
+    var seats = buildSeats(state.floor, state.date);
+    var mine = mineMap();
+    var free = 0;
+    $('grid').innerHTML = seats.map(function (s) {
+      var st = mine[s.no] ? 'mine' : s.status;
+      if (st === 'free') free++;
+      return '<div class="seat ' + st + '" data-id="' + s.id + '">' + s.short + '</div>';
+    }).join('');
+    $('heroSub').textContent = state.dateLabel + ' · 当前楼层剩余 ' + free + ' 个空位';
+    $('floorTitle').textContent = getFloor(state.floor).name;
+    $('grid').dataset.seats = JSON.stringify(seats);
+    renderFloors();
+  }
+
+  /* ================= 弹层 ================= */
+  /** 我在当天所有座位上的已占时段：{ 时段label: 座位号 } */
+  function mySlotMap() {
+    var m = {};
+    state.bookings.forEach(function (b) {
+      if (b.status !== 'active' || b.date !== state.date) return;
+      b.slotLabels.forEach(function (l) { m[l] = b.seatNo; });
+    });
+    return m;
+  }
+
+  function openPanel(seat) {
+    var mine = mySlotMap();
+    var others = {};
+
+    state.seat = seat;
+    state.picked = [];
+    $('panelSub').textContent = seat.no + ' · ' + state.dateLabel;
+
+    // 只有「今天」才需要判断时段是否已过
+    var isToday = state.date === days[0].date;
+    var now = new Date();
+    var expiredCount = 0;
+
+    $('slots').innerHTML = SLOTS.map(function (s) {
+      var ownerSeat = mine[s.label];
+      var off = !!ownerSeat;
+      var same = ownerSeat === seat.no;
+      var tip;
+
+      if (isToday && isSlotExpired(s, now)) {
+        off = true;
+        tip = '已过时段';
+        expiredCount++;
+      } else if (off) {
+        tip = same ? '已被预约' : '已约 ' + ownerSeat;
+        if (!same) others[ownerSeat] = 1;
+      } else {
+        tip = '可预约';
+      }
+
+      return '<div class="slot ' + (off ? 'off' : '') + '" data-id="' + s.id +
+        '" data-tip="' + tip + '"><b>' + s.label + '</b><span>' + tip + '</span></div>';
+    }).join('');
+
+    var names = Object.keys(others);
+    var tipEl = $('panelTip');
+    var tipText = '';
+    if (expiredCount === SLOTS.length) {
+      tipText = '今天的可预约时段已结束，请切换到明天或之后的日期';
+    } else if (names.length) {
+      tipText = '同一时段只能预约一个座位。你在该时段已约 ' +
+        names.join('、') + '，请换个时段，或先取消原预约';
+    }
+
+    if (tipText) {
+      tipEl.textContent = tipText;
+      tipEl.classList.add('on');
+    } else {
+      tipEl.classList.remove('on');
+      tipEl.textContent = '';
+    }
+
+    updatePanel();
+    $('mask').classList.add('on');
+    $('panel').classList.add('on');
+  }
+
+  function closePanel() {
+    $('mask').classList.remove('on');
+    $('panel').classList.remove('on');
+  }
+
+  function updatePanel() {
+    $('selCount').textContent = state.picked.length;
+    $('confirmBtn').disabled = state.picked.length === 0;
+    Array.prototype.forEach.call($('slots').children, function (el) {
+      var id = Number(el.dataset.id);
+      var on = state.picked.indexOf(id) > -1;
+      var off = el.classList.contains('off');
+      el.classList.toggle('on', on);
+      el.querySelector('span').textContent = off
+        ? (el.dataset.tip || '已被预约')
+        : (on ? '已选' : '可预约');
+    });
+  }
+
+  /* ================= 我的预约 ================= */
+  function renderBookings() {
+    var box = $('bookingList');
+
+    // 未登录不展示任何预约信息
+    if (!state.user) {
+      box.innerHTML = '<div class="card empty-card" data-act="login">' +
+        '<div class="empty-title">登录后查看预约记录</div>' +
+        '<div class="empty-sub">点击这里去登录</div></div>';
+      $('bookingCount').textContent = '0';
+      return;
+    }
+
+    var tab = state.tab;
+    var list = state.bookings.filter(function (b) {
+      // 已取消的记录不再出现在列表里
+      if (b.status === 'cancel') return false;
+      return tab === 'all' ? true : b.status === tab;
+    });
+
+    if (!list.length) {
+      var empty = {
+        all: '还没有预约记录',
+        active: '暂无进行中的预约',
+        done: '暂无已完成的预约'
+      }[tab] || '还没有预约记录';
+      box.innerHTML = '<div class="card" style="text-align:center;color:#A9B4BA;padding:50px 0;font-size:13px">' + empty + '</div>';
+      $('bookingCount').textContent = '0';
+      return;
+    }
+
+    box.innerHTML = list.map(function (b) {
+      var idx = state.bookings.indexOf(b);
+      var tag = b.status === 'active' ? '进行中' : b.status === 'done' ? '已完成' : '已取消';
+      return '<div class="card" data-idx="' + idx + '" style="cursor:pointer">' +
+        '<div class="booking-top"><div><b>' + b.seatNo + '</b><p>' + b.floorName + '</p></div>' +
+        '<span class="tag ' + b.status + '">' + tag + '</span></div>' +
+        '<div class="row"><span>日期</span><em>' + b.date + '</em></div>' +
+        '<div class="row"><span>时段</span><em>' + b.slotLabels.join('  /  ') + '</em></div>' +
+        (b.status !== 'cancel'
+          ? '<div class="booking-actions">' +
+            '<button class="btn-ghost" data-act="cancel" data-idx="' + idx + '">取消预约</button>' +
+            (b.status === 'active'
+              ? '<button class="btn btn-sm" data-act="code" data-idx="' + idx + '">查看签到码</button>'
+              : '') +
+            '</div>'
+          : '') +
+        '</div>';
+    }).join('');
+    $('bookingCount').textContent = list.length;
+  }
+
+  function renderStats() {
+    // 未登录时统计一律为 0，不泄露预约数据
+    if (!state.user) {
+      $('stTotal').textContent = '0';
+      $('stActive').textContent = '0';
+      $('stHours').textContent = '0';
+      return;
+    }
+    var visible = state.bookings.filter(function (b) { return b.status !== 'cancel'; });
+    $('stTotal').textContent = visible.length;
+    $('stActive').textContent = visible.filter(function (b) { return b.status === 'active'; }).length;
+    $('stHours').textContent = visible.reduce(function (s, b) {
+      return s + (b.status === 'done' ? b.slotLabels.length * 2 : 0);
+    }, 0);
+  }
+
+  /* ================= 登录 / 退出 ================= */
+  function renderProfile() {
+    var u = state.user;
+    $('pfAvatar').textContent = u ? u.nickName.charAt(0) : '?';
+    $('pfName').textContent = u ? u.nickName : '未登录';
+    $('pfMeta').textContent = u
+      ? u.college + ' · ' + u.studentId
+      : '点击登录，同步你的预约记录';
+    $('pfCard').classList.toggle('guest', !u);
+    $('pfLogin').style.display = u ? 'none' : 'block';
+    $('pfLogout').style.display = u ? 'flex' : 'none';
+  }
+
+  function doLogin(profile) {
+    state.user = {
+      nickName: (profile && profile.nickName) || '林同学',
+      college: '计算机学院',
+      studentId: (profile && profile.studentId) || '2023010114'
+    };
+    renderProfile();
+    renderBookings();
+    renderStats();
+    renderSeats();
+    toast('登录成功');
+  }
+
+  /* ---------- 登录页 ---------- */
+  function renderAgree() {
+    $('lgBox').classList.toggle('on', state.agreed);
+    var id = $('lgId').value.trim();
+    var name = $('lgName').value.trim();
+    var ok = /^\d{6,12}$/.test(id) && name.length > 0 && state.agreed;
+    $('lgSubmit').disabled = !ok;
+  }
+
+  function openLogin(from) {
+    state.loginReturn = from || state.screen || 'index';
+    $('lgId').value = '';
+    $('lgName').value = '';
+    state.agreed = false;
+    renderAgree();
+    show('login');
+  }
+
+  function doLogout() {
+    askDialog('退出登录', '退出后需要重新登录才能预约座位，确定吗？', '确定退出', function () {
+      state.user = null;
+      renderProfile();
+      renderBookings();
+      renderStats();
+      renderSeats();
+      toast('已退出登录');
+    }, true);
+  }
+
+  /* ================= 页面切换 ================= */
+  function show(name) {
+    Array.prototype.forEach.call(document.querySelectorAll('.screen'), function (s) {
+      s.classList.remove('on');
+    });
+    $('s-' + name).classList.add('on');
+    state.screen = name;
+
+    var titles = {
+      index: '图书馆预约',
+      my: '我的预约',
+      detail: '预约详情',
+      profile: '我的',
+      login: '登录'
+    };
+    $('navTitle').textContent = titles[name] || '';
+
+    var isSub = name === 'detail' || name === 'login';
+    document.querySelector('.nav .back').style.display = isSub ? 'block' : 'none';
+    Array.prototype.forEach.call($('tabbar').children, function (t) {
+      t.classList.toggle('on', t.dataset.tab === name);
+    });
+    $('tabbar').style.display = isSub ? 'none' : 'flex';
+    document.querySelector('.viewport').scrollTop = 0;
+  }
+
+  /* ================= 事件 ================= */
+  $('datebar').addEventListener('click', function (e) {
+    var el = e.target.closest('.day');
+    if (!el) return;
+    state.date = el.dataset.date;
+    var d = days.filter(function (x) { return x.date === state.date; })[0];
+    state.dateLabel = d ? d.label : '';
+    renderDates();
+    renderSeats();
+  });
+
+  on('floors', 'click', function (e) {
+    var el = e.target.closest('[data-floor]');
+    if (!el) return;
+    var f = Number(el.dataset.floor);
+    if (f === state.floor) return;
+    state.floor = f;
+    renderSeats();
+  });
+
+  $('grid').addEventListener('click', function (e) {
+    var el = e.target.closest('.seat');
+    if (!el) return;
+    if (el.classList.contains('used')) return;
+    if (el.classList.contains('fix')) return;
+    if (el.classList.contains('mine')) return;
+    var seats = JSON.parse($('grid').dataset.seats);
+    var seat = seats.filter(function (s) { return s.id === el.dataset.id; })[0];
+    if (!seat) return;
+
+    // 未登录只能看，不能预约：跳登录页，并把座位记下来
+    if (!state.user) {
+      state.pendingSeat = seat;
+      openLogin('index');
+      return;
+    }
+
+    openPanel(seat);
+  });
+
+  $('mask').addEventListener('click', closePanel);
+  $('panelClose').addEventListener('click', closePanel);
+
+  $('slots').addEventListener('click', function (e) {
+    var el = e.target.closest('.slot');
+    if (!el || el.classList.contains('off')) return;
+    var id = Number(el.dataset.id);
+    var i = state.picked.indexOf(id);
+    if (i > -1) {
+      state.picked.splice(i, 1);
+    } else {
+      if (state.picked.length >= 2) return;
+      state.picked.push(id);
+    }
+    updatePanel();
+  });
+
+  $('confirmBtn').addEventListener('click', function () {
+    if (!state.picked.length) return;
+    var mine = mySlotMap();
+    var labels = state.picked.sort().map(function (id) {
+      return SLOTS.filter(function (s) { return s.id === id; })[0].label;
+    });
+
+    // 提交前再校验：时段不能已过期
+    var isToday = state.date === days[0].date;
+    var now = new Date();
+    if (isToday) {
+      var expired = state.picked.filter(function (id) {
+        var slot = SLOTS.filter(function (s) { return s.id === id; })[0];
+        return slot && isSlotExpired(slot, now);
+      });
+      if (expired.length) {
+        toast('所选时段已过时间');
+        closePanel();
+        renderSeats();
+        return;
+      }
+    }
+
+    // 同一时段不能同时占两个座位
+    var clash = labels.filter(function (l) { return !!mine[l]; });
+    if (clash.length) {
+      toast('所选时段与已有预约冲突');
+      closePanel();
+      return;
+    }
+    state.bookings.unshift({
+      id: 'B' + Date.now(),
+      seatNo: state.seat.no,
+      floor: state.seat.floor,
+      floorName: state.seat.floorName,
+      date: state.date,
+      slotLabels: labels,
+      status: 'active',
+      code: String(Math.floor(100000 + Math.random() * 900000))
+    });
+    closePanel();
+    renderSeats();
+    // 新预约一定是「进行中」，把筛选切过去，避免用户以为没约上
+    state.tab = 'active';
+    Array.prototype.forEach.call($('myTabs').children, function (t) {
+      t.classList.toggle('on', t.dataset.tab === 'active');
+    });
+    renderBookings();
+    renderStats();
+  });
+
+  $('myTabs').addEventListener('click', function (e) {
+    var el = e.target.closest('[data-tab]');
+    if (!el || el.classList.contains('on')) return;
+    state.tab = el.dataset.tab;
+    Array.prototype.forEach.call($('myTabs').children, function (t) {
+      t.classList.toggle('on', t === el);
+    });
+    renderBookings();
+  });
+
+  /* ---------- 详情 / 弹窗 / 提示 ---------- */
+  function openDetail(idx) {
+    var b = state.bookings[idx];
+    if (!b) return;
+    var statusText = b.status === 'active' ? '进行中' : b.status === 'done' ? '已完成' : '已取消';
+    $('dCode').textContent = b.code;
+    $('dSeat').textContent = b.seatNo;
+    $('dArea').textContent = b.floorName;
+    $('dDate').textContent = b.date;
+    $('dSlot').textContent = b.slotLabels.join('  /  ');
+    $('dStatus').textContent = statusText;
+    $('dTip').textContent = b.status === 'active'
+      ? '点击数字可复制，到自习室终端输入即可签到'
+      : '该预约已' + statusText + '，签到码不再有效';
+    show('detail');
+  }
+
+  var dlgCallback = null;
+
+  function askDialog(title, text, okText, onOk, danger) {
+    $('dlgTitle').textContent = title;
+    $('dlgText').textContent = text;
+    var ok = $('dlgOk');
+    ok.textContent = okText || '确定';
+    ok.classList.toggle('danger', !!danger);
+    dlgCallback = onOk;
+    $('dlgMask').classList.add('on');
+  }
+
+  function closeDialog() {
+    $('dlgMask').classList.remove('on');
+    dlgCallback = null;
+  }
+
+  var toastTimer = null;
+  function toast(msg) {
+    var el = $('toast');
+    el.textContent = msg;
+    el.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('on'); }, 1400);
+  }
+
+  /* 统一的绑定入口，元素缺失时不至于让后面所有事件都失效 */
+  function on(id, ev, fn) {
+    var el = $(id);
+    if (el) el.addEventListener(ev, fn);
+    return el;
+  }
+
+  on('dlgCancel', 'click', closeDialog);
+  on('dlgOk', 'click', function () {
+    var fn = dlgCallback;
+    closeDialog();
+    if (fn) fn();
+  });
+
+  /* ---------- 预约卡片点击 ---------- */
+  on('bookingList', 'click', function (e) {
+    // 未登录的空状态卡片：点击去登录
+    var loginCard = e.target.closest('[data-act="login"]');
+    if (loginCard) {
+      openLogin('my');
+      return;
+    }
+
+    // 先判断按钮，避免冒泡到卡片导致误跳详情
+    var cancelBtn = e.target.closest('[data-act="cancel"]');
+    if (cancelBtn) {
+      var ci = Number(cancelBtn.dataset.idx);
+      var cb = state.bookings[ci];
+      if (!cb) return;
+      askDialog('取消预约', cb.status === 'done'
+        ? '该预约已完成，取消后记录将标记为「已取消」，确定吗？'
+        : '取消后座位将立即释放，确定要取消吗？', '确定取消', function () {
+        cb.status = 'cancel';
+        renderBookings();
+        renderSeats();
+        renderStats();
+        toast('已取消预约');
+      }, true);
+      return;
+    }
+
+    var codeBtn = e.target.closest('[data-act="code"]');
+    if (codeBtn) {
+      openDetail(Number(codeBtn.dataset.idx));
+      return;
+    }
+
+    var card = e.target.closest('[data-idx]');
+    if (!card) return;
+    openDetail(Number(card.dataset.idx));
+  });
+
+  $('tabbar').addEventListener('click', function (e) {
+    var el = e.target.closest('[data-tab]');
+    if (el) show(el.dataset.tab);
+  });
+
+  document.querySelector('.nav .back').addEventListener('click', function () {
+    if (state.screen === 'login') {
+      state.pendingSeat = null;
+      show(state.loginReturn || 'index');
+      return;
+    }
+    show('my');
+  });
+
+  on('pfCard', 'click', function () {
+    if (!state.user) openLogin('profile');
+  });
+
+  /* ---------- 登录页交互 ---------- */
+  on('lgId', 'input', renderAgree);
+  on('lgName', 'input', renderAgree);
+
+  on('lgAgree', 'click', function () {
+    state.agreed = !state.agreed;
+    renderAgree();
+  });
+
+  on('lgSkip', 'click', function () {
+    state.pendingSeat = null;
+    show(state.loginReturn || 'index');
+  });
+
+  on('lgSubmit', 'click', function () {
+    doLogin({
+      studentId: $('lgId').value.trim(),
+      nickName: $('lgName').value.trim()
+    });
+    var target = state.loginReturn || 'index';
+    show(target);
+    // 如果是从选座跳过来的，登录后自动把面板接上
+    if (state.pendingSeat) {
+      var s = state.pendingSeat;
+      state.pendingSeat = null;
+      openPanel(s);
+    }
+  });
+
+  on('pfActions', 'click', function (e) {
+    var el = e.target.closest('[data-act]');
+    if (!el) return;
+
+    if (el.dataset.act === 'logout') {
+      doLogout();
+      return;
+    }
+
+    if (el.dataset.act === 'reset') {
+      askDialog('重置演示数据', '将清除所有预约记录，列表会恢复为空（不会退出登录）。', '确定重置', function () {
+        var keepUser = state.user;
+        // 重置后完全为空，不再补演示数据
+        state.bookings = [];
+        state.user = keepUser;
+        state.tab = 'all';
+        Array.prototype.forEach.call($('myTabs').children, function (t) {
+          t.classList.toggle('on', t.dataset.tab === 'all');
+        });
+        renderBookings();
+        renderSeats();
+        renderStats();
+        renderProfile();
+        toast('已重置');
+      }, true);
+    }
+  });
+
+  /* ================= 初始化 ================= */
+  renderDates();
+  renderFloors();
+  renderSeats();
+  renderBookings();
+  renderStats();
+  renderProfile();
+})();
+</script>
+</body>
+</html>

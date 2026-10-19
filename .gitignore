@@ -1,0 +1,15 @@
+# 依赖
+node_modules/
+
+# 微信开发者工具的个人配置（含本机路径与编译设置，不应提交）
+project.private.config.json
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+
+# 临时文件
+*.tmp

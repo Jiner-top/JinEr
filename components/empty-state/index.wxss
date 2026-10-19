@@ -1,0 +1,66 @@
+.empty {
+  padding: 120rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 用纯 CSS 画一个空书桌，避免依赖图片资源 */
+.empty__icon {
+  position: relative;
+  width: 160rpx;
+  height: 130rpx;
+  margin-bottom: 32rpx;
+}
+
+.empty__desk {
+  position: absolute;
+  top: 24rpx;
+  left: 10rpx;
+  width: 140rpx;
+  height: 12rpx;
+  border-radius: 6rpx;
+  background: #DCE4E7;
+}
+
+.empty__desk::before,
+.empty__desk::after {
+  content: '';
+  position: absolute;
+  top: 12rpx;
+  width: 8rpx;
+  height: 48rpx;
+  border-radius: 4rpx;
+  background: #E7EDEF;
+}
+
+.empty__desk::before {
+  left: 12rpx;
+}
+
+.empty__desk::after {
+  right: 12rpx;
+}
+
+.empty__chair {
+  position: absolute;
+  bottom: 6rpx;
+  left: 52rpx;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 12rpx;
+  background: #EFF3F4;
+  border: 2rpx solid #E1E8EA;
+}
+
+.empty__text {
+  font-size: 30rpx;
+  color: #7A878F;
+  font-weight: 500;
+}
+
+.empty__sub {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #A9B4BA;
+}

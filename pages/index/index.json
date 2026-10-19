@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "date-bar": "/components/date-bar/index",
+    "seat-map": "/components/seat-map/index"
+  },
+  "navigationBarTitleText": "自习室预约",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

@@ -1,0 +1,352 @@
+.page {
+  padding-bottom: 48rpx;
+}
+
+/* ---------------- 顶部 ---------------- */
+.hero {
+  position: relative;
+  min-height: 330rpx;
+  overflow: hidden;
+  border-radius: 0 0 40rpx 40rpx;
+  /* 图片加载前的兜底底色 */
+  background: #14594A;
+}
+
+/* 背景图铺满整块区域 */
+.hero__bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 上浅下深的蒙层，保证底部白色文字清晰 */
+.hero__mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 32, 26, 0.08) 0%,
+    rgba(8, 32, 26, 0.28) 55%,
+    rgba(8, 32, 26, 0.72) 100%
+  );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  min-height: 330rpx;
+  padding: 0 40rpx 56rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.hero__sub {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+}
+
+/* 日期条压在渐变背景上 */
+.date-wrap {
+  margin-top: -40rpx;
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------------- 楼层选择 ---------------- */
+.floors {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 26rpx 22rpx;
+}
+
+.floor {
+  width: calc(25% - 12rpx);
+  margin: 6rpx;
+  padding: 16rpx 0 14rpx;
+  border-radius: 18rpx;
+  text-align: center;
+  background: #fff;
+  border: 2rpx solid transparent;
+  box-shadow: 0 4rpx 14rpx rgba(31, 42, 48, 0.05);
+  transition: all 0.18s ease;
+}
+
+.floor__num {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1F2A30;
+  line-height: 1.2;
+}
+
+.floor__free {
+  margin-top: 4rpx;
+  font-size: 20rpx;
+  color: #A9B4BA;
+}
+
+.floor--on {
+  background: linear-gradient(135deg, #23876E 0%, #14594A 100%);
+  border-color: #14594A;
+  box-shadow: 0 8rpx 20rpx rgba(29, 122, 99, 0.28);
+}
+
+.floor--on .floor__num {
+  color: #fff;
+}
+
+.floor--on .floor__free {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* ---------------- 座位卡片 ---------------- */
+.card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.card__title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1F2A30;
+}
+
+.card__sub {
+  font-size: 24rpx;
+  color: #A9B4BA;
+}
+
+/* ---------------- 图例 ---------------- */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 28rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx solid #F2F5F6;
+}
+
+.legend__item {
+  display: flex;
+  align-items: center;
+  margin-right: 32rpx;
+  font-size: 24rpx;
+  color: #7A878F;
+}
+
+.dot {
+  width: 22rpx;
+  height: 22rpx;
+  margin-right: 10rpx;
+  border-radius: 6rpx;
+}
+
+.dot--free {
+  background: #fff;
+  border: 2rpx solid #D8E7E2;
+}
+
+.dot--used {
+  background: #F1F3F4;
+}
+
+.dot--mine {
+  background: #1D7A63;
+}
+
+.dot--fix {
+  background: #FDF2F0;
+  border: 2rpx dashed #F0C6BF;
+}
+
+/* ---------------- 须知 ---------------- */
+.tips {
+  margin: 0 40rpx;
+  padding: 28rpx 32rpx;
+  background: rgba(29, 122, 99, 0.05);
+  border-radius: 20rpx;
+}
+
+.tips__title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1D7A63;
+  margin-bottom: 12rpx;
+}
+
+.tips__item {
+  font-size: 24rpx;
+  color: #7A878F;
+  line-height: 1.9;
+}
+
+/* ---------------- 时段选择弹层 ---------------- */
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 99;
+  background: rgba(16, 24, 28, 0.45);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  padding: 36rpx 32rpx calc(32rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  border-radius: 32rpx 32rpx 0 0;
+  transform: translateY(110%);
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.panel--on {
+  transform: translateY(0);
+}
+
+.panel__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28rpx;
+}
+
+.panel__title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1F2A30;
+}
+
+.panel__sub {
+  margin-top: 6rpx;
+  font-size: 24rpx;
+  color: #A9B4BA;
+}
+
+.panel__close {
+  width: 56rpx;
+  height: 56rpx;
+  line-height: 52rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #A9B4BA;
+  background: #F4F6F7;
+  border-radius: 50%;
+}
+
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -8rpx 16rpx;
+}
+
+.slot {
+  width: calc(50% - 16rpx);
+  margin: 8rpx;
+  padding: 24rpx 20rpx;
+  border-radius: 18rpx;
+  border: 2rpx solid #EDF1F3;
+  background: #FAFBFB;
+  transition: all 0.16s ease;
+}
+
+.slot__time {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1F2A30;
+}
+
+.slot__tip {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #A9B4BA;
+}
+
+.slot--on {
+  background: #E7F4F0;
+  border-color: #1D7A63;
+}
+
+.slot--on .slot__time {
+  color: #1D7A63;
+}
+
+.slot--on .slot__tip {
+  color: #1D7A63;
+}
+
+.slot--off {
+  background: #F7F8F9;
+  border-color: #F1F3F4;
+}
+
+.slot--off .slot__time {
+  color: #C4CCD1;
+}
+
+.slot--off .slot__tip {
+  color: #C4CCD1;
+}
+
+/* 跨楼层时段冲突提示 */
+.panel__tip {
+  margin: 0 8rpx 16rpx;
+  padding: 16rpx 20rpx;
+  font-size: 22rpx;
+  line-height: 1.6;
+  color: #B07B12;
+  background: #FDF4E3;
+  border-radius: 14rpx;
+}
+
+.panel__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20rpx;
+}
+
+.panel__count {
+  font-size: 24rpx;
+  color: #7A878F;
+}
+
+.panel__num {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1D7A63;
+  padding: 0 4rpx;
+}
+
+.panel__btn {
+  width: 320rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: 30rpx;
+  border-radius: 44rpx;
+}

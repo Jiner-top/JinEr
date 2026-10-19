@@ -1,0 +1,20 @@
+<scroll-view
+  class="date-bar"
+  scroll-x
+  enable-flex
+  enhanced
+  show-scrollbar="{{false}}"
+>
+  <view class="date-bar__inner">
+    <view
+      wx:for="{{days}}"
+      wx:key="date"
+      class="day {{item.date === active ? 'day--on' : ''}}"
+      data-date="{{item.date}}"
+      bindtap="onTap"
+    >
+      <view class="day__label">{{item.label}}</view>
+      <view class="day__num">{{item.day}}</view>
+    </view>
+  </view>
+</scroll-view>

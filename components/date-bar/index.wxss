@@ -1,0 +1,50 @@
+.date-bar {
+  width: 100%;
+  white-space: nowrap;
+  margin-bottom: 24rpx;
+}
+
+.date-bar__inner {
+  display: flex;
+  padding: 8rpx 32rpx;
+}
+
+.day {
+  flex: 0 0 auto;
+  width: 104rpx;
+  margin-right: 16rpx;
+  padding: 16rpx 0;
+  border-radius: 20rpx;
+  text-align: center;
+  background: #fff;
+  border: 2rpx solid transparent;
+  transition: all 0.18s ease;
+}
+
+.day:last-child {
+  margin-right: 0;
+}
+
+.day__label {
+  font-size: 22rpx;
+  color: #7A878F;
+  margin-bottom: 4rpx;
+}
+
+.day__num {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1F2A30;
+  line-height: 1.2;
+}
+
+.day--on {
+  background: #1D7A63;
+  border-color: #1D7A63;
+  box-shadow: 0 8rpx 20rpx rgba(29, 122, 99, 0.25);
+}
+
+.day--on .day__label,
+.day--on .day__num {
+  color: #fff;
+}

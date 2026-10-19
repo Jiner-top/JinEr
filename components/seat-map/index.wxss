@@ -1,0 +1,70 @@
+.seat-map {
+  padding: 8rpx 0 4rpx;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -5rpx;
+}
+
+/* 8 列：每格占 12.5%，再减去两侧各 5rpx 的间距 */
+.seat {
+  width: calc(12.5% - 10rpx);
+  height: 84rpx;
+  margin: 5rpx;
+  border-radius: 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid transparent;
+  transition: transform 0.12s ease, background-color 0.15s ease;
+}
+
+.seat__num {
+  font-size: 22rpx;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* ---------- 四种状态 ---------- */
+.seat--free {
+  background: #FFFFFF;
+  border-color: #D8E7E2;
+  box-shadow: 0 2rpx 6rpx rgba(29, 122, 99, 0.06);
+}
+
+.seat--free .seat__num {
+  color: #1D7A63;
+}
+
+.seat--used {
+  background: #F1F3F4;
+  border-color: #F1F3F4;
+}
+
+.seat--used .seat__num {
+  color: #BCC5CA;
+}
+
+.seat--mine {
+  background: linear-gradient(135deg, #23876E 0%, #14594A 100%);
+  border-color: #14594A;
+}
+
+.seat--mine .seat__num {
+  color: #FFFFFF;
+}
+
+.seat--fix {
+  background: #FDF2F0;
+  border: 2rpx dashed #F0C6BF;
+}
+
+.seat--fix .seat__num {
+  color: #D9A29A;
+}
+
+.seat--hover {
+  transform: scale(0.92);
+}

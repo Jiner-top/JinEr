@@ -1,0 +1,120 @@
+/* ============================================================
+   全局样式 / 设计变量
+   颜色、圆角、阴影统一在这里定义，页面里只用变量，方便整体换肤
+   ============================================================ */
+page {
+  --c-primary: #1D7A63;
+  --c-primary-dark: #14594A;
+  --c-primary-soft: #E7F4F0;
+  --c-text: #1F2A30;
+  --c-text-sub: #7A878F;
+  --c-text-light: #A9B4BA;
+  --c-line: #EDF1F3;
+  --c-bg: #F5F7F8;
+  --c-white: #FFFFFF;
+  --c-warn: #F0A020;
+  --c-warn-soft: #FDF4E3;
+  --c-danger: #E5484D;
+  --c-danger-soft: #FCEDEC;
+  --radius-s: 12rpx;
+  --radius-m: 20rpx;
+  --radius-l: 28rpx;
+  --shadow: 0 8rpx 32rpx rgba(31, 42, 48, 0.06);
+
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+    "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  font-size: 28rpx;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+view,
+text,
+button,
+scroll-view {
+  box-sizing: border-box;
+}
+
+/* ---------- 通用卡片 ---------- */
+.card {
+  background: var(--c-white);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow);
+  padding: 32rpx;
+  margin: 0 32rpx 28rpx;
+}
+
+/* ---------- 通用按钮 ---------- */
+button {
+  padding: 0;
+  margin: 0;
+  font-size: 30rpx;
+  line-height: 1;
+  background: transparent;
+  border-radius: 0;
+}
+
+button::after {
+  border: none;
+}
+
+.btn-primary {
+  height: 92rpx;
+  line-height: 92rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 46rpx;
+  background: linear-gradient(135deg, #23876E 0%, #14594A 100%);
+  box-shadow: 0 10rpx 24rpx rgba(29, 122, 99, 0.28);
+}
+
+.btn-primary[disabled] {
+  background: #D5DDE0;
+  color: #fff;
+  box-shadow: none;
+}
+
+.btn-ghost {
+  height: 72rpx;
+  line-height: 68rpx;
+  padding: 0 32rpx;
+  text-align: center;
+  color: var(--c-text-sub);
+  font-size: 28rpx;
+  border-radius: 36rpx;
+  border: 2rpx solid var(--c-line);
+  background: var(--c-white);
+}
+
+/* ---------- 状态标签 ---------- */
+.tag {
+  display: inline-block;
+  padding: 6rpx 18rpx;
+  font-size: 22rpx;
+  border-radius: 999rpx;
+  line-height: 1.4;
+}
+
+.tag--active {
+  color: var(--c-primary);
+  background: var(--c-primary-soft);
+}
+
+.tag--done {
+  color: var(--c-text-sub);
+  background: #F1F4F5;
+}
+
+.tag--cancel {
+  color: var(--c-text-light);
+  background: #F6F7F8;
+}
+
+/* ---------- 空状态 / 安全区 ---------- */
+.safe-bottom {
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+}

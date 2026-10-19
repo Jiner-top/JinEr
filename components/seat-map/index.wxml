@@ -1,0 +1,15 @@
+<view class="seat-map">
+  <view class="grid">
+    <view
+      wx:for="{{seats}}"
+      wx:key="id"
+      class="seat seat--{{item.status}}"
+      hover-class="seat--hover"
+      hover-stay-time="60"
+      data-index="{{index}}"
+      bindtap="onTap"
+    >
+      <text class="seat__num">{{item.short}}</text>
+    </view>
+  </view>
+</view>

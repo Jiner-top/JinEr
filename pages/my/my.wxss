@@ -1,0 +1,134 @@
+.page {
+  padding-top: 24rpx;
+  padding-bottom: 60rpx;
+}
+
+/* ---------------- 筛选 ---------------- */
+.tabs {
+  display: flex;
+  margin: 0 32rpx 28rpx;
+  padding: 8rpx;
+  background: #EBEFF1;
+  border-radius: 20rpx;
+}
+
+.tabs__item {
+  flex: 1;
+  height: 68rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  color: #7A878F;
+  border-radius: 14rpx;
+  transition: all 0.18s ease;
+}
+
+/* 每个 tab 的数量角标 */
+.tabs__badge {
+  min-width: 30rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  margin-left: 6rpx;
+  padding: 0 8rpx;
+  font-size: 20rpx;
+  text-align: center;
+  color: #7A878F;
+  background: #fff;
+  border-radius: 15rpx;
+}
+
+.tabs__item--on .tabs__badge {
+  color: #1D7A63;
+  background: #E7F4F0;
+}
+
+.tabs__item--on {
+  background: #fff;
+  color: #1D7A63;
+  font-weight: 600;
+  box-shadow: 0 4rpx 14rpx rgba(31, 42, 48, 0.08);
+}
+
+/* ---------------- 预约卡片 ---------------- */
+.booking {
+  transition: transform 0.15s ease;
+}
+
+/* 只有信息区可点击，点击反馈也放在这里 */
+.booking__main:active {
+  opacity: 0.72;
+}
+
+.booking__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 24rpx;
+  border-bottom: 2rpx solid #F2F5F6;
+  margin-bottom: 8rpx;
+}
+
+.booking__seat {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #1F2A30;
+  letter-spacing: 1rpx;
+}
+
+.booking__area {
+  margin-top: 6rpx;
+  font-size: 24rpx;
+  color: #A9B4BA;
+}
+
+.booking__row {
+  display: flex;
+  align-items: baseline;
+  padding: 12rpx 0;
+}
+
+.booking__k {
+  width: 96rpx;
+  font-size: 26rpx;
+  color: #A9B4BA;
+}
+
+.booking__v {
+  flex: 1;
+  font-size: 26rpx;
+  color: #4A555C;
+}
+
+.booking__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx solid #F2F5F6;
+}
+
+.booking__actions .btn-ghost {
+  margin-right: 20rpx;
+}
+
+/* 只剩一个按钮时去掉右侧多余间距 */
+.booking__actions .btn-ghost:last-child {
+  margin-right: 0;
+}
+
+.booking__btn {
+  width: 240rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 26rpx;
+  border-radius: 36rpx;
+  box-shadow: none;
+}
+
+.page__foot {
+  display: flex;
+  justify-content: center;
+  margin-top: 12rpx;
+}

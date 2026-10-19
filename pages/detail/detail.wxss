@@ -1,0 +1,76 @@
+.page {
+  padding: 32rpx 0 60rpx;
+}
+
+/* ---------------- 签到码卡片 ---------------- */
+.code-card {
+  margin: 0 32rpx 28rpx;
+  padding: 56rpx 32rpx 44rpx;
+  text-align: center;
+  border-radius: 28rpx;
+  background: linear-gradient(150deg, #23876E 0%, #14594A 100%);
+  box-shadow: 0 16rpx 40rpx rgba(29, 122, 99, 0.24);
+}
+
+.code-card__label {
+  font-size: 24rpx;
+  letter-spacing: 6rpx;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.code-card__num {
+  margin: 20rpx 0 18rpx;
+  font-size: 80rpx;
+  font-weight: 700;
+  letter-spacing: 14rpx;
+  color: #fff;
+  text-indent: 14rpx;
+}
+
+.code-card__tip {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+/* ---------------- 信息行 ---------------- */
+.row {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 0;
+  border-bottom: 2rpx solid #F5F7F8;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row__k {
+  width: 120rpx;
+  font-size: 26rpx;
+  color: #A9B4BA;
+}
+
+.row__v {
+  flex: 1;
+  font-size: 28rpx;
+  color: #4A555C;
+}
+
+.row__v--strong {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1F2A30;
+}
+
+/* ---------------- 操作 ---------------- */
+.action {
+  display: flex;
+  justify-content: center;
+  margin-top: 16rpx;
+}
+
+.action__btn {
+  width: 400rpx;
+  height: 84rpx;
+  line-height: 80rpx;
+}

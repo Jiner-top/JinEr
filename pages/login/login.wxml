@@ -1,0 +1,62 @@
+<view class="page">
+  <!-- 品牌区：背景图 + 渐变蒙层 -->
+  <view class="hero">
+    <image class="hero__bg" src="/images/hero.jpg" mode="aspectFill"></image>
+    <view class="hero__mask"></view>
+    <view class="hero__content">
+      <view class="logo">
+        <view class="logo__book"></view>
+        <view class="logo__desk"></view>
+      </view>
+      <view class="hero__school">南阳师范学院</view>
+      <view class="hero__title">图书馆预约系统</view>
+      <view class="hero__sub">静心学习，从一个好座位开始</view>
+    </view>
+  </view>
+
+  <!-- 表单 -->
+  <view class="form">
+    <view class="field">
+      <text class="field__label">学号</text>
+      <input
+        class="field__input"
+        type="number"
+        maxlength="12"
+        placeholder="请输入学号"
+        placeholder-class="field__ph"
+        value="{{studentId}}"
+        bindinput="onStudentId"
+      />
+    </view>
+    <view class="field">
+      <text class="field__label">昵称</text>
+      <input
+        class="field__input"
+        maxlength="12"
+        placeholder="请输入昵称"
+        placeholder-class="field__ph"
+        value="{{nickName}}"
+        bindinput="onNickName"
+      />
+    </view>
+  </view>
+
+  <!-- 协议 -->
+  <view class="agree" bindtap="onAgree">
+    <view class="agree__box {{agreed ? 'agree__box--on' : ''}}">
+      <text wx:if="{{agreed}}" class="agree__tick">✓</text>
+    </view>
+    <text class="agree__text">我已阅读并同意《用户协议》和《隐私政策》</text>
+  </view>
+
+  <!-- 登录按钮 -->
+  <button
+    class="btn-primary login-btn"
+    disabled="{{!canSubmit || loading}}"
+    bindtap="onLogin"
+  >{{loading ? '登录中...' : '登 录'}}</button>
+
+  <view class="skip" bindtap="onSkip">暂不登录，先逛逛</view>
+
+  <view class="tips">登录后可预约座位、查看预约记录</view>
+</view>
